@@ -1,0 +1,30 @@
+###
+# @name Signup
+POST http://localhost:5001/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "wowow",
+  "email": "wowow",
+  "password": "123456"
+}
+
+###
+# @name Login
+POST http://localhost:5001/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "wowow",
+  "password": "123456"
+}
+
+###
+# @name Logout
+POST http://localhost:5001/api/v1/auth/logout
+Content-Type: application/json
+
+###
+# @name Check
+GET http://localhost:5001/api/v1/auth/check
+Content-Type: application/json
