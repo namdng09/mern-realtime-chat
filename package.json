@@ -1,0 +1,22 @@
+{
+  "name": "mern-realtime-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm build --prefix frontend",
+    "start": "npm start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://namdng09: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@github.com/namdng09/mern-realtime-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/namdng09/mern-realtime-chat/issues"
+  },
+  "homepage": "https://github.com/namdng09/mern-realtime-chat#readme"
+}
