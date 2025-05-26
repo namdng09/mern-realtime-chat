@@ -2,37 +2,40 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import path from "path";
 
 import { connectDB } from "./lib/db.js";
 import authRoutes from "./routers/auth.route.js";
 import messageRoutes from "./routers/message.route.js";
+import { app, server } from "./lib/socket.js";
 
 dotenv.config();
-const app = express();
 
 const PORT = process.env.PORT;
-const MONGODB_URI = process.env.MONGODB_URI;
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/messages", messageRoutes);
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}/`);
-//   connectDB();
-// });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log("Database is connected successfully.");
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
+}
+
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}/`);
+  connectDB();
+});
